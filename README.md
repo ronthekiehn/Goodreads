@@ -1,2 +1,2 @@
-# Goodreads-Consensus
+# Goodreads
 Chrome extension that generates a review consensus
