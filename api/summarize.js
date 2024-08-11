@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     const { reviews } = req.body;
 
-    const prompt = `You are review aggregator for the site Goodreads. You are to write a review consensus based off of the following top 10 reviews. Make it short and snappy, 3 sentences at most. Make sure to use phrases like 'Readers said'. Here are the reviews: ${reviews}`;
+    const prompt = `You are review aggregator for the site Goodreads. You are to write a review consensus based off of the following top 10 reviews. Make it short and snappy, 3 sentences at most. Make sure to use phrases like 'Readers said', and make sure to focus on reader's opinions about the book, try not to summarize the book itself. Here are the reviews: ${reviews}`;
 
     // Access your API key as an environment variable
     const API_KEY = process.env.GEMINI_API_KEY;
