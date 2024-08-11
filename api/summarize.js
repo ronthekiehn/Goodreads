@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -12,10 +12,31 @@ export default async function handler(req, res) {
     // Access your API key as an environment variable
     const API_KEY = process.env.GEMINI_API_KEY;
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
+    
+    // This seems like overkill, but some books were being blocked
+    const safetySettings = [
+        {
+          category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+          threshold: HarmBlockThreshold.BLOCK_NONE,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+          threshold: HarmBlockThreshold.BLOCK_NONE,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+          threshold: HarmBlockThreshold.BLOCK_NONE,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+          threshold: HarmBlockThreshold.BLOCK_NONE,
+        },
+      ]
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash', safetySettings });
     try {
-        const result = await model.generateContent(prompt);
+        const result = await model.generateContent(prompt,
+            
+        );
         const response = await result.response;
         const text = await response.text();
         res.status(200).json({ text: text });
