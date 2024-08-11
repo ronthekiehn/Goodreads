@@ -10,17 +10,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 async function run(reviews){
-    const response = await fetch('https://goodreads-tan.vercel.app/api/generateContent', {
+    const response = await fetch('https://goodreads-tan.vercel.app/api/summarize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reviews: reviews })
     });
-    console.log(response);
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log(data);
     return data.text;
 }

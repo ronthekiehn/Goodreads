@@ -3,6 +3,7 @@
     "name": "Goodreads Review Summary",
     "version": "1.0",
     "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["https://goodreads-tan.vercel.app/api/*"],
     "content_scripts": [
       {
         "matches": ["*://www.goodreads.com/book/show/*"],
