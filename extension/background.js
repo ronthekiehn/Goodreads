@@ -16,7 +16,7 @@ async function run(reviews){
         body: JSON.stringify({ reviews: reviews })
     });
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error(`HTTP error status: ${response.status}`);
     }
 
     const data = await response.json();
