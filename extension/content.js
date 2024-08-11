@@ -54,13 +54,11 @@ async function main(){
 
     // Get reviews
     let reviews = await getReviews();
-    console.log(reviews);
     // Sanitize and filter reviews (for gemini)
     const englishRegex = /^[A-Za-z0-9.,!?;:'"(){}\[\]\s-]*$/;
     reviews = reviews.map(str => sanitizeText(str)) // Sanitize each string
     .filter(str => englishRegex.test(str));
 
-    console.log(reviews);
     // Send reviews to background for processing
     chrome.runtime.sendMessage({reviews: reviews}, function(response) {
         normalText.innerText = response.consensus;
