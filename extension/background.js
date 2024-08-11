@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 async function run(reviews){
-    const response = await fetch('https://your-vercel-url.vercel.app/api/generateContent', {
+    const response = await fetch('https://goodreads-tan.vercel.app/api/generateContent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reviews: reviews })
