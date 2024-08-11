@@ -47,7 +47,10 @@ async function main(){
 
 
     // Get reviews
-    const reviews = await getReviews();
+    let reviews = await getReviews();
+
+    const englishRegex = /^[A-Za-z0-9.,!?;:'"(){}\[\]\s]*$/;
+    reviews = reviews.filter(str => englishRegex.test(str));
     // Send reviews to background for processing
     chrome.runtime.sendMessage({reviews: reviews}, function(response) {
         normalText.innerText = response.consensus;
