@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Goodreads Review Summary",
+    "name": "Review Consensus for Goodreads",
     "version": "1.0",
     "permissions": ["activeTab", "scripting"],
     "host_permissions": ["https://goodreads-tan.vercel.app/api/*"],
@@ -12,6 +12,12 @@
     ],
     "background": {
       "service_worker": "background.js"
+    },
+    "icons":{
+      "16": "icons/goodreads16.png",
+      "32": "icons/goodreads32.png",
+      "128": "icons/goodreads128.png",
+      "256": "icons/goodreads.png"
     }
   }
   
