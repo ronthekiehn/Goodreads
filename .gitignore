@@ -131,3 +131,6 @@ dist
 
 #ds store
 .DS_Store
+
+#for extension
+*.zip
