@@ -2,7 +2,6 @@
     "manifest_version": 3,
     "name": "Review Consensus for Goodreads",
     "version": "1.0",
-    "permissions": ["activeTab", "scripting"],
     "host_permissions": ["https://goodreads-tan.vercel.app/api/*"],
     "content_scripts": [
       {
