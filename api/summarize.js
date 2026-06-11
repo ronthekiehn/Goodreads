@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Invalid reviews' });
     }
 
-    const prompt = `You are review aggregator for the site Goodreads. You are to write a review consensus based off of the following top 10 reviews. Make it short and snappy, 3 sentences at most. Make sure to use phrases like 'Readers said'. Here are the reviews: ${reviews}`;
+    const prompt = `Write a concise Goodreads review consensus based on the reviews below. Use 45 to 65 words total, with 65 words as a hard maximum. Prefer 2 sentences and never exceed 3. Begin with "Readers said" and focus only on the strongest points of agreement or disagreement. Do not include a title, bullets, or lengthy examples. Reviews: ${reviews}`;
 
     // Access your API key as an environment variable
     const API_KEY = process.env.GEMINI_API_KEY;
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
         model: 'gemini-3.1-flash-lite',
         safetySettings,
         generationConfig: {
-          maxOutputTokens: 256,
+          maxOutputTokens: 128,
         },
       });
     try {
