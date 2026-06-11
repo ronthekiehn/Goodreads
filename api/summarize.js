@@ -32,7 +32,7 @@ export default async function handler(req, res) {
           threshold: HarmBlockThreshold.BLOCK_NONE,
         },
       ]
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash', safetySettings });
+      const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite', safetySettings });
     try {
         const result = await model.generateContent(prompt,
             
