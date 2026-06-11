@@ -1,11 +1,28 @@
 const { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } = require("@google/generative-ai");
 
+const EXTENSION_ORIGIN = 'chrome-extension://klpimcobgdoeidognoplffkaajjialid';
+const MAX_REVIEWS_LENGTH = 50000;
+
 export default async function handler(req, res) {
+    const origin = req.headers.origin;
+
+    if (origin !== EXTENSION_ORIGIN) {
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end();
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { reviews } = req.body;
+    const { reviews } = req.body || {};
+
+    if (typeof reviews !== 'string' || reviews.length < 1 || reviews.length > MAX_REVIEWS_LENGTH) {
+        return res.status(400).json({ error: 'Invalid reviews' });
+    }
 
     const prompt = `You are review aggregator for the site Goodreads. You are to write a review consensus based off of the following top 10 reviews. Make it short and snappy, 3 sentences at most. Make sure to use phrases like 'Readers said'. Here are the reviews: ${reviews}`;
 
@@ -32,7 +49,13 @@ export default async function handler(req, res) {
           threshold: HarmBlockThreshold.BLOCK_NONE,
         },
       ]
-      const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite', safetySettings });
+      const model = genAI.getGenerativeModel({
+        model: 'gemini-3.1-flash-lite',
+        safetySettings,
+        generationConfig: {
+          maxOutputTokens: 256,
+        },
+      });
     try {
         const result = await model.generateContent(prompt,
             
